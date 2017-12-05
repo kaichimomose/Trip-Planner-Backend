@@ -9,10 +9,10 @@ from flask_restful import Resource, Api
 import bcrypt
 
 app = Flask(__name__)
-# mongo = MongoClient('mongodb://kaichi:password@ds155325.mlab.com:55325/trip_planner_production')
-mongo = MongoClient('mongodb://localhost:27017/')
+mongo = MongoClient('mongodb://kaichi:password@ds155325.mlab.com:55325/trip_planner_production')
+# mongo = MongoClient('mongodb://localhost:27017/')
 
-app.db = mongo.trip_planer
+app.db = mongo.trip_planner_production
 api = Api(app)
 
 app.bcrypt_rounds = 12
