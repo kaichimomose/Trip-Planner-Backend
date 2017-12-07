@@ -51,16 +51,16 @@ class Users(Resource):
     def post(self):
         json_body = request.json
         password = json_body['password']
+        username = json_body['username']
 
         encodedPassword = password.encode('utf-8')
         hashed = bcrypt.hashpw(encodedPassword, bcrypt.gensalt(app.bcrypt_rounds))
         # hashed = hashed.decode()
-        pdb.set_trace()
 
         json_body['password'] = hashed
 
         result = self.users_collection.insert_one(json_body)
-        user = self.users_collection.find_one({"_id": result.inserted_id})
+        user = self.users_collection.find_one({"username": username})
         return user
 
     @authenticated_request
