@@ -52,7 +52,7 @@ class Users(Resource):
         json_body = request.json
         password = json_body['password']
         username = json_body['username']
-        json_body['id'] = len(self.users_collection) + 1
+        json_body['id'] = self.users_collection.count() + 1
 
         encodedPassword = password.encode('utf-8')
         hashed = bcrypt.hashpw(encodedPassword, bcrypt.gensalt(app.bcrypt_rounds))
