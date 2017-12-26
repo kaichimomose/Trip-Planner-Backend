@@ -105,7 +105,7 @@ class Trip(Resource):
     def get(self):
         user_id = request.args.get('id')
         # trip_collection = app.db.trip
-        trip = self.trip_collection.find({'id': int(user_id}))
+        trip = self.trip_collection.find({'id': 0})
         return trip
 
     def patch(self):
