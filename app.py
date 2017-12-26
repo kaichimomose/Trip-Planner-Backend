@@ -93,7 +93,7 @@ class Users(Resource):
 class Trip(Resource):
 
     def __init__(self):
-        self.trip_collection = app.db.trip
+        self.trip_collection = app.db.trips
 
     def post(self):
         new_trip = request.json
