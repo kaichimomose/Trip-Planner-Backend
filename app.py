@@ -16,6 +16,7 @@ app.db = mongo.trip_planner_production
 api = Api(app)
 
 app.bcrypt_rounds = 12
+user_id = 0
 
 def validate_auth(user, password):
     user_collection = app.db.users
@@ -47,14 +48,13 @@ class Users(Resource):
 
     def __init__(self):
         self.users_collection = app.db.users
-        self.id = 0
 
     def post(self):
-        self.id += 1
+        user_id += 1
         json_body = request.json
         password = json_body['password']
         username = json_body['username']
-        json_body['id'] = self.id
+        json_body['id'] = user_id
 
         encodedPassword = password.encode('utf-8')
         hashed = bcrypt.hashpw(encodedPassword, bcrypt.gensalt(app.bcrypt_rounds))
