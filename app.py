@@ -47,11 +47,14 @@ class Users(Resource):
 
     def __init__(self):
         self.users_collection = app.db.users
+        self.id = 0
 
     def post(self):
+        self.id += 1
         json_body = request.json
         password = json_body['password']
         username = json_body['username']
+        json_body['id'] = self.id
 
         encodedPassword = password.encode('utf-8')
         hashed = bcrypt.hashpw(encodedPassword, bcrypt.gensalt(app.bcrypt_rounds))
@@ -77,8 +80,8 @@ class Users(Resource):
         username = request.authorization.username
         new_user = request.json["new_username"]
         user = self.users_collection.find_one_and_update(
-            {"user": username},
-            {"$set": {"user": new_user}},
+            {"username": username},
+            {"$set": {"username": new_user}},
             return_document=ReturnDocument.AFTER
         )
         return user
@@ -86,7 +89,7 @@ class Users(Resource):
     @authenticated_request
     def delete(self):
         username = request.authorization.username
-        self.users_collection.remove({'user': username})
+        self.users_collection.remove({'username': username})
 
 
 class Trip(Resource):
