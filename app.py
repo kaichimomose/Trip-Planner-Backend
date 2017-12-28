@@ -139,6 +139,8 @@ class Trip(Resource):
         user_id = request.json['id']
         trip_name = request.json['trip_name']
         self.trip_collection.remove({'id': user_id, 'trip_name': trip_name})
+        trip = self.trip_collection.find({'id': user_id})
+        return trip
 
 
 @api.representation('application/json')
