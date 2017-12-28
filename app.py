@@ -118,11 +118,13 @@ class Trip(Resource):
 
         old_trip = request.json['old_trip']
         new_trip = request.json['new_trip']
+        completed = request.json["completed"]
         new_waypoints = request.json["waypoints"]
 
         trip = self.trip_collection.find_one_and_update(
             {'id': user_id, 'trip_name': old_trip},
             {"$set": {'trip_name': new_trip,
+                      'completed': completed,
                       'waypoints': new_waypoints}},
             return_document=ReturnDocument.AFTER
         )
