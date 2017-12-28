@@ -109,15 +109,15 @@ class Trip(Resource):
         return trip
 
     def patch(self):
-        user_id = request.args.get('id')
+        user_id = request.args.get('id', type=int)
         old_trip = request.args.get('old_trip')
         waypoint = request.args.get('row')
         # trip_collection = app.db.trip
         new_trip = request.args.get('new_trip')
         new_waypoint = request.args.get('new_waypoint')
         trip = self.trip_collection.find_one_and_update(
-            {'id': int(user_id), 'trip_name': old_trip},
-            {"$addToSet": {'trip_name': new_trip, 'waypoints.{}'.format(waypoint): new_waypoint}},
+            {'id': user_id, 'trip_name': old_trip},
+            {"$set": {'trip_name': new_trip, 'waypoints.{}'.format(waypoint): new_waypoint}},
             return_document=ReturnDocument.AFTER
         )
         return trip
