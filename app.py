@@ -110,12 +110,14 @@ class Trip(Resource):
 
     def patch(self):
         user_id = request.args.get('id', type=int)
-        old_trip = request.args.get('old_trip')
+        # old_trip = request.args.get('old_trip')
 
         # waypoint = request.args.get('row')
-        new_trip = request.args.get('new_trip')
+        # new_trip = request.args.get('new_trip')
         # new_waypoint = request.args.get('new_waypoint', type=[str])
 
+        old_trip = request.jaon['old_trip']
+        new_trip = request.json['new_trip']
         new_waypoints = request.json["waypoints"]
 
         trip = self.trip_collection.find_one_and_update(
@@ -128,20 +130,12 @@ class Trip(Resource):
 
     def delete(self):
         user_id = request.args.get('id', type=int)
-        trip_name = request.args.get('trip_name')
-        # trip_collection = app.db.trip
-        row_of_waypoint = request.args.get('row')
-        waypoint = request.args.get('waypoint')
-
-        if row_of_waypoint is not None and waypoint is not None:
-            trip = self.trip_collection.find_one_and_update(
-                {'id': user_id, 'trip_name': trip_name},
-                {"$pull": {'waypoints': {'{}'.format(row_of_waypoint): waypoint}}},
-                return_document=ReturnDocument.AFTER
-            )
-            return trip
-        else:
-            self.trip_collection.remove({'id': user_id, 'trip_name': trip_name})
+        # trip_name = request.args.get('trip_name')
+        # # trip_collection = app.db.trip
+        # row_of_waypoint = request.args.get('row')
+        # waypoint = request.args.get('waypoint')
+        trip_name = request.jaon['trip_name']
+        self.trip_collection.remove({'id': user_id, 'trip_name': trip_name})
 
 
 @api.representation('application/json')
