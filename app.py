@@ -109,7 +109,7 @@ class Trip(Resource):
         return trip
 
     def patch(self):
-        user_id = request.args.get('id', type=int)
+        # user_id = request.args.get('id', type=int)
         # old_trip = request.args.get('old_trip')
 
         # waypoint = request.args.get('row')
@@ -131,11 +131,12 @@ class Trip(Resource):
         return trip
 
     def delete(self):
-        user_id = request.args.get('id', type=int)
+        # user_id = request.args.get('id', type=int)
         # trip_name = request.args.get('trip_name')
         # # trip_collection = app.db.trip
         # row_of_waypoint = request.args.get('row')
         # waypoint = request.args.get('waypoint')
+        user_id = request.json['id']
         trip_name = request.json['trip_name']
         self.trip_collection.remove({'id': user_id, 'trip_name': trip_name})
 
