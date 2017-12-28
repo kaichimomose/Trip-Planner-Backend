@@ -112,13 +112,13 @@ class Trip(Resource):
         user_id = request.args.get('id', type=int)
         old_trip = request.args.get('old_trip')
 
-        # waypoints = request.args.get('waypoints', type=[str])
+        waypoint = request.args.get('row')
         new_trip = request.args.get('new_trip')
-        new_waypoint = request.args.get('new_waypoint', type=[str])
+        new_waypoint = request.args.get('new_waypoint')
         trip = self.trip_collection.find_one_and_update(
             {'id': user_id, 'trip_name': old_trip},
             {"$set": {'trip_name': new_trip,
-                      'waypoints.$[]': new_waypoint}},
+                      'waypoints.{}'.format(waypoint): new_waypoint}},
             return_document=ReturnDocument.AFTER
         )
         return trip
