@@ -117,8 +117,8 @@ class Trip(Resource):
         new_waypoint = request.args.get('new_waypoint')
         trip = self.trip_collection.find_one_and_update(
             {'id': user_id, 'trip_name': old_trip},
-            {"$set": {'trip_name': new_trip},
-             "$addToSet": {'waypoints.{}'.format(waypoint): new_waypoint}},
+            {"$set": {'trip_name': new_trip,
+                      'waypoints.{}'.format(waypoint): new_waypoint}},
             return_document=ReturnDocument.AFTER
         )
         return trip
