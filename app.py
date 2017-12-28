@@ -116,7 +116,7 @@ class Trip(Resource):
         # new_trip = request.args.get('new_trip')
         # new_waypoint = request.args.get('new_waypoint', type=[str])
 
-        old_trip = request.jaon['old_trip']
+        old_trip = request.json['old_trip']
         new_trip = request.json['new_trip']
         new_waypoints = request.json["waypoints"]
 
@@ -134,7 +134,7 @@ class Trip(Resource):
         # # trip_collection = app.db.trip
         # row_of_waypoint = request.args.get('row')
         # waypoint = request.args.get('waypoint')
-        trip_name = request.jaon['trip_name']
+        trip_name = request.json['trip_name']
         self.trip_collection.remove({'id': user_id, 'trip_name': trip_name})
 
 
