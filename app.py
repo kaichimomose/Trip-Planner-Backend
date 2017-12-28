@@ -127,12 +127,13 @@ class Trip(Resource):
         user_id = request.args.get('id', type=int)
         trip_name = request.args.get('trip_name')
         # trip_collection = app.db.trip
+        row_of_waypoint = request.args.get('row')
         waypoint = request.args.get('waypoint')
 
-        if waypoint is not None:
+        if row_of_waypoint is not None and waypoint is not None:
             trip = self.trip_collection.find_one_and_update(
                 {'id': user_id, 'trip_name': trip_name},
-                {"$pull": {'waypoints': waypoint}},
+                {"$pull": {'waypoints.{}'.format(row_of_waypoint): waypoint}},
                 return_document=ReturnDocument.AFTER
             )
             return trip
