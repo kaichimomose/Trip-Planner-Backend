@@ -115,7 +115,7 @@ class Trip(Resource):
         # waypoint = request.args.get('row')
         # new_trip = request.args.get('new_trip')
         # new_waypoint = request.args.get('new_waypoint', type=[str])
-
+        user_id = request.json['id']
         old_trip = request.json['old_trip']
         new_trip = request.json['new_trip']
         completed = request.json["completed"]
