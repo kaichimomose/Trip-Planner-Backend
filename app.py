@@ -47,6 +47,7 @@ class Users(Resource):
 
     def __init__(self):
         self.users_collection = app.db.users
+        self.trip_collection = app.db.trips
 
     def post(self):
         json_body = request.json
@@ -73,9 +74,9 @@ class Users(Resource):
         # pdb.set_trace()
         return user
 
-    @authenticated_request
+    # @authenticated_request
     def patch(self):
-        username = request.authorization.username
+        username = request.json["username"]  # request.authorization.username
         new_user = request.json["new_username"]
         user = self.users_collection.find_one_and_update(
             {"username": username},
@@ -84,10 +85,12 @@ class Users(Resource):
         )
         return user
 
-    @authenticated_request
+    # @authenticated_request
     def delete(self):
-        username = request.authorization.username
-        self.users_collection.remove({'username': username})
+        # username = request.authorization.username
+        user_id = request.args.get('id', type=int)
+        self.users_collection.remove({'id': user_id})
+        self.trip_collection.remove({"id": user_id})
 
 
 class Trip(Resource):
