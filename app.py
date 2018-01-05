@@ -91,6 +91,7 @@ class Users(Resource):
         user_id = request.args.get('id', type=int)
         self.users_collection.remove({'id': user_id})
         self.trip_collection.remove({"id": user_id})
+        return 0
 
 
 class Trip(Resource):
